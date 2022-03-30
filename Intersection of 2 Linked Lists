@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct Node{
+    int val;
+    Node* next;
+};
+
+Node* ConstructList(vector<int> v){
+    Node* head=nullptr;
+    for(int i=v.size()-1;i>=0;i--){
+        Node* node=new Node;
+        node->val=v[i];
+        node->next=head;
+        head=node;
+    }
+    return head;
+
+}
+     Node* get_Intersection(Node* headA, Node* headB){
+           Node *temp=headA,*temp1=headB,*temp2;
+        int n=0,m=0;
+        while(temp!=NULL)  {
+            n++;
+            temp=temp->next;
+        }
+        while(temp1!=NULL){
+            m++;
+            temp1=temp1->next;
+        }
+        if(m>n){
+            temp2=headA;
+            headA=headB;
+            headB=temp2;
+        }
+        int d=abs(n-m);
+        cout<<d<<endl;
+        temp=headA;
+        while(temp!=NULL && d--)  {
+            temp=temp->next;
+        }
+            temp1=headB;
+        while(temp!=NULL && temp1!=NULL){
+            if(temp==temp1) {
+                return temp;
+            }
+            temp=temp->next;
+            temp1=temp1->next;
+        }
+        return NULL;
+     }
+
+     void print(Node* head){
+         Node* temp=head;
+         while(temp!=NULL){
+             cout<<temp->val<<"->";
+             temp=temp->next;
+         }
+     }
+int main(){
+    int n;  cin>>n;  //Size of Linked List
+    vector<int> v(n);//Elements of Vector
+    for(int i=0;i<n;i++)  cin>>v[i];
+
+      int m;  cin>>m;  //Size of Linked List
+    vector<int> v1(m);//Elements of Vector
+    for(int i=0;i<m;i++)  cin>>v1[i];
+
+   //Create 1st Linked List 
+    Node* head1=ConstructList(v);
+
+    //Create 1st Linked List 
+    Node* head2=ConstructList(v1);
+
+   //Intersection Point of Linked List
+    Node* node=get_Intersection(head1,head2);
+      cout<<node<<endl;
+
+     cout<<"Intesected at Node"<<node->val<<endl;
+   
+}
