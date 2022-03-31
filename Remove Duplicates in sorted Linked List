@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct Node{
+    int val;
+    Node* next;
+};
+
+Node* ConstructList(vector<int> v){
+    Node* head=nullptr;
+    for(int i=v.size()-1;i>=0;i--){
+        Node* node=new Node;
+        node->val=v[i];
+        node->next=head;
+        head=node;
+    }
+    return head;
+
+}
+    Node* remove_Dup(Node* head){
+          Node *current,*nex;
+        current=head;
+        nex=head;
+        while(current!=NULL){
+            if(current==nex)  nex=current->next;
+            else if(nex!=NULL && current->val==nex->val){
+                current->next=nex->next;
+                nex->next=NULL;
+                 nex=current->next;
+            }
+            else {
+                if(nex!=NULL)
+                nex=nex->next;
+                current=current->next;
+            }
+        }
+        return head;
+    }
+
+     void print(Node* head){
+         Node* temp=head;
+         while(temp!=NULL){
+             cout<<temp->val<<"->";
+             temp=temp->next;
+         }
+     }
+int main(){
+    int n;  cin>>n;  //Size of Linked List
+    vector<int> v(n);//Elements of Vector
+    for(int i=0;i<n;i++)  cin>>v[i];
+
+   //Create 1st Linked List 
+    Node* head1=ConstructList(v);
+
+
+   //Merge Sorted Linked List
+    Node* node=remove_Dup(head1);
+    
+     print(node);
+}
